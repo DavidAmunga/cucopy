@@ -9,10 +9,17 @@ import toast, { Toaster } from "react-hot-toast";
 import Header from "@/components/Header";
 import CopyToClipboard from "react-copy-to-clipboard";
 import dynamic from "next/dynamic";
-import { getLastQueryParamValueFromUrl } from "@/utils/helpers";
+import {
+  getLastQueryParamValueFromUrl,
+  shareViaWhatsApp,
+  shareViaEmail,
+} from "@/utils/helpers";
 import { IoLogoGithub } from "react-icons/io";
 import Link from "next/link";
 import HomeSEO from "@/components/HomeSEO";
+import { BsWhatsapp } from "react-icons/bs";
+import { RiMailSendLine } from "react-icons/ri";
+import { format } from "date-fns";
 
 const DynamicQrScanner = dynamic(
   () => import("@yudiel/react-qr-scanner").then((mod) => mod.Scanner),
@@ -23,6 +30,16 @@ const DynamicQrScanner = dynamic(
 
 const Home = () => {
   const [value, setValue] = useState<string | null>(null);
+
+  let getTextToSend = (): string => {
+    if (value == null) return "";
+    return `CU Invoice No: ${getLastQueryParamValueFromUrl(
+      value
+    )}\n\nQR Code Link :\n\n${value}\n\nScanned on ${format(
+      new Date(),
+      "do MMM yyyy hh:mm aaa"
+    )}\n\nScanned with https://cucopy.com`;
+  };
 
   return (
     <>
@@ -146,12 +163,62 @@ const Home = () => {
                       onClick={() => {
                         window.open(`${value}`, "__blank");
                       }}
-                      className=" bg-gray-800 hover:bg-gray-900 w-full flex justify-center space-x-2 py-4 font-bold text-xl shadow-md rounded-md "
+                      className=" bg-gray-800 hover:bg-gray-900 items-center w-full flex justify-center space-x-2 py-4 font-bold text-xl shadow-md rounded-md "
                     >
                       <span>CONFIRM</span>
                       <ArrowTopRightOnSquareIcon className="size-7" />
                     </button>
                   </motion.div>
+                )}
+                {value && (
+                  <div className="grid grid-cols-1 gap-2">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                    >
+                      <button
+                        type="submit"
+                        onClick={() => {
+                          shareViaWhatsApp(getTextToSend());
+                        }}
+                        className=" bg-[#25D366] hover:opacity-90 items-center w-full flex justify-center space-x-2 py-4 font-bold text-xl shadow-md rounded-md "
+                      >
+                        <span>SHARE ON WHATSAPP</span>
+                        <BsWhatsapp />
+                      </button>
+                    </motion.div>{" "}
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                    >
+                      <button
+                        type="submit"
+                        onClick={() => {
+                          shareViaEmail(
+                            `Tax Invoice for ${format(
+                              new Date(),
+                              "do MMM yyyy hh:mm aaa"
+                            )}`,
+                            getTextToSend()
+                          );
+                        }}
+                        className=" bg-gray-800 hover:bg-gray-900 w-full flex items-center justify-center space-x-2 py-4 font-bold text-xl shadow-md rounded-md "
+                      >
+                        <span>SHARE ON EMAIL</span>
+                        <RiMailSendLine />
+                      </button>
+                    </motion.div>
+                  </div>
                 )}
               </div>
               <div className="flex-1"></div>
