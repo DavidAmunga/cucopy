@@ -4,8 +4,8 @@ import { NextSeo } from "next-seo";
 const HomeSEO = () => {
   const title = "CUCOPY";
   const description = "Scan and Copy CU Invoice No from Tax Invoices";
-  const url = `https://cucopy.vercel.app`;
-  const image = `https://cucopy.vercel.app/api/og`;
+  const url = `https://cucopy.com`;
+  const image = `https://cucopy.com/api/og`;
   const keywords = `tax,kenya,cu invoice,cu invoice no`;
 
   return (
