@@ -1,6 +1,7 @@
 {
   "name": "CUCOPY",
   "short_name": "CUCOPY",
+  "description": "Scan and Copy CU Invoice No from Tax Invoices",
   "icons": [
     { "src": "/favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
     { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },

@@ -25,7 +25,7 @@ const Header = () => {
         {/* Logo */}
         <Link href="/" className="cursor-pointer flex items-center space-x-2">
           <div className="font-display font-bold text-md md:text-2xl -mt-2 text-white">
-            <span className="text-blue-500">CU</span> COPY
+            CUCOPY
           </div>
         </Link>
         <div className="flex md:hidden">
@@ -97,7 +97,7 @@ const Header = () => {
               className="cursor-pointer flex items-center space-x-2"
             >
               <div className="font-display font-bold text-md md:text-2xl -mt-2 text-white">
-                <span className="text-blue-500">CU</span> COPY
+                CUCOPY
               </div>
             </Link>
 
