@@ -35,10 +35,10 @@ const Home = () => {
     if (value == null) return "";
     return `CU Invoice No: ${getLastQueryParamValueFromUrl(
       value
-    )}\n\nQR Code Link :\n\n${value}\n\nScanned on ${format(
+    )}\n\nScanned on ${format(
       new Date(),
       "do MMM yyyy hh:mm aaa"
-    )}\n\nScanned with https://cucopy.com`;
+    )}\n\nScanned with https://cucopy.com\n\nQR Code Link :\n\n`;
   };
 
   return (
@@ -184,7 +184,7 @@ const Home = () => {
                       <button
                         type="submit"
                         onClick={() => {
-                          shareViaWhatsApp(getTextToSend());
+                          shareViaWhatsApp(getTextToSend(), value);
                         }}
                         className=" bg-[#25D366] hover:opacity-90 items-center w-full flex justify-center space-x-2 py-4 font-bold text-xl shadow-md rounded-md "
                       >
@@ -209,7 +209,7 @@ const Home = () => {
                               new Date(),
                               "do MMM yyyy hh:mm aaa"
                             )}`,
-                            getTextToSend()
+                            `${getTextToSend()}${value}`
                           );
                         }}
                         className=" bg-gray-800 hover:bg-gray-900 w-full flex items-center justify-center space-x-2 py-4 font-bold text-xl shadow-md rounded-md "
