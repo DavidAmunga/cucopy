@@ -6,6 +6,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import FeedbackDialog from "../FeedbackDialog";
+import { FiRefreshCw } from "react-icons/fi";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -28,8 +29,19 @@ const Header = () => {
             CUCOPY
           </div>
         </Link>
-        <div className="flex md:hidden">
-          {/* <div className="hidden md:hidden"> */}
+        <div className="flex space-x-6 items-center md:hidden">
+          <button
+            type="button"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            <FiRefreshCw
+              size={30}
+              className="text-white cursor-pointer rounded-full p-0.5 hover:opacity-50"
+            />
+          </button>
+
           <button
             name="open-menu"
             aria-label="open-menu"
