@@ -45,11 +45,12 @@ const Home = () => {
     <>
       <Head>
         <title>CUCOPY</title>
-        <HomeSEO />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#000000" />
       </Head>
+      <HomeSEO />
+
       <div className="flex flex-col h-screen">
         <Header />
         <main className="flex-1 w-full bg-black h-full">
