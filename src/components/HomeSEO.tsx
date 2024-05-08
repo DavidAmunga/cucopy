@@ -3,9 +3,9 @@ import { NextSeo } from "next-seo";
 
 const HomeSEO = () => {
   const title = "CUCOPY";
-  const description = "Scan and Copy CU Invoice No from Tax Invoices";
+  const description = "Scan and Copy CU Invoice No from Kenyan Tax Invoices";
   const url = `https://cucopy.com`;
-  const image = `https://cucopy.com/api/og`;
+  const image = `https://cucopy.com/ogimage.jpg`;
   const keywords = `tax,kenya,cu invoice,cu invoice no`;
 
   return (
