@@ -1,7 +1,7 @@
 {
   "name": "CUCOPY",
   "short_name": "CUCOPY",
-  "description": "Scan and Copy CU Invoice No from Tax Invoices",
+  "description": "Scan and Copy CU Invoice No from Kenyan Tax Invoices",
   "scope": "/",
   "start_url": "/",
   "display": "standalone",
@@ -40,13 +40,13 @@
       "src": "/desktop-screenshot.jpg",
       "sizes": "1024x768",
       "type": "image/jpg",
-      "platform": "wide"
+      "form_factor": "wide"
     },
     {
       "src": "/mobile-screenshot.jpg",
       "sizes": "640x480",
       "type": "image/jpg",
-      "platform": "narrow"
+      "form_factor": "narrow"
     }
   ],
   "theme_color": "#000000",
