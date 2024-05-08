@@ -8,9 +8,20 @@ import Image from "next/image";
 import FeedbackDialog from "../FeedbackDialog";
 import { FiRefreshCw } from "react-icons/fi";
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
 const Header = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallBtn, setShowInstallBtn] = useState<boolean>(false);
 
   useEffect(() => {
     if (router.pathname) {
@@ -20,6 +31,38 @@ const Header = () => {
   }, [router.pathname]);
 
   const [openFeedback, setOpenFeedback] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Save the event so it can be triggered later.
+      setDeferredPrompt(e as any);
+      setShowInstallBtn(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+  const handleInstallClick = () => {
+    // Hide the install button
+    setShowInstallBtn(false);
+    // Show the install prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult: any) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      setDeferredPrompt(null);
+    });
+  };
+
   return (
     <>
       <div className="py-4 md:w-full max-w-6xl mx-auto flex md:items-center  w-full px-3 md:px-0  justify-between">
@@ -70,6 +113,15 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <div className="hidden  md:flex items-center space-x-2">
+          {showInstallBtn && (
+            <button
+              type="button"
+              onClick={handleInstallClick}
+              className="text-white transition-all border border-black  hover:border-white p-2 rounded-md font-semibold"
+            >
+              Install App
+            </button>
+          )}
           <Link
             target="_blank"
             href="https://twitter.com/davidamunga_"
@@ -89,9 +141,9 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div >
       {/* Mobile Menu */}
-      <Dialog
+      < Dialog
         as="div"
         className="lg:hidden"
         open={open}
@@ -146,7 +198,7 @@ const Header = () => {
             </div>
           </div>
         </Dialog.Panel>
-      </Dialog>
+      </Dialog >
 
       <FeedbackDialog
         open={openFeedback}
