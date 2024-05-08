@@ -28,8 +28,18 @@ const DynamicQrScanner = dynamic(
   }
 );
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
 const Home = () => {
   const [value, setValue] = useState<string | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   let getTextToSend = (): string => {
     if (value == null) return "";
@@ -39,6 +49,33 @@ const Home = () => {
       new Date(),
       "do MMM yyyy hh:mm aaa"
     )}\n\nScanned with https://cucopy.com\n\nQR Code Link :\n\n`;
+  };
+
+  useEffect(() => {
+    // Check if the browser supports PWA installation
+    window.addEventListener("beforeinstallprompt", (event) => {
+      // Prevent the default browser prompt
+      event.preventDefault();
+      // Store the event to show the prompt later
+      setDeferredPrompt(event);
+    });
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      // Show the browser install prompt
+      deferredPrompt.prompt();
+      // Wait for the user to interact with the prompt
+      deferredPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        // Reset the deferred prompt
+        setDeferredPrompt(null);
+      });
+    }
   };
 
   return (
@@ -226,6 +263,12 @@ const Home = () => {
             </div>
           </div>
         </main>
+        {deferredPrompt && (
+          <div>
+            <p>This app can be installed as a PWA.</p>
+            <button onClick={handleInstallClick}>Install</button>
+          </div>
+        )}
       </div>
     </>
   );
