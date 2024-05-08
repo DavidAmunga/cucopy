@@ -26,7 +26,7 @@ const Header = () => {
         {/* Logo */}
         <Link href="/" className="cursor-pointer flex items-center space-x-2">
           <div className="font-display font-bold text-md md:text-2xl -mt-2 text-white">
-            CUCOPY
+            CUCOPY.COM
           </div>
         </Link>
         <div className="flex space-x-6 items-center md:hidden">
@@ -73,7 +73,7 @@ const Header = () => {
           <Link
             target="_blank"
             href="https://twitter.com/davidamunga_"
-            className="text-white  hover:bg-gray-900 p-2  rounded-md font-semibold"
+            className="text-white  border border-black  hover:border-white p-2  rounded-md font-semibold"
           >
             Built by a Human
           </Link>
@@ -83,7 +83,7 @@ const Header = () => {
               onClick={() => {
                 setOpenFeedback(true);
               }}
-              className="text-white transition-all hover:bg-gray-900 p-2 rounded-md font-semibold"
+              className="text-white transition-all border border-black  hover:border-white p-2 rounded-md font-semibold"
             >
               Share Feedback
             </button>

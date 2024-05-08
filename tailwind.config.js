@@ -20,7 +20,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: [
-          "Roboto Mono",
           "Inter",
           "system-ui",
           "-apple-system",

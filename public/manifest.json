@@ -35,6 +35,20 @@
       "purpose": "maskable"
     }
   ],
+  "screenshots": [
+    {
+      "src": "/desktop-screenshot.jpg",
+      "sizes": "1024x768",
+      "type": "image/jpg",
+      "platform": "wide"
+    },
+    {
+      "src": "/mobile-screenshot.jpg",
+      "sizes": "640x480",
+      "type": "image/jpg",
+      "platform": "narrow"
+    }
+  ],
   "theme_color": "#000000",
   "background_color": "#000000"
 }
