@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import FeedbackDialog from "../FeedbackDialog";
 import { FiRefreshCw } from "react-icons/fi";
+import { MdOutlineInstallMobile } from "react-icons/md";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -41,10 +42,13 @@ const Header = () => {
       setShowInstallBtn(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
     };
   }, []);
   const handleInstallClick = () => {
@@ -54,10 +58,10 @@ const Header = () => {
     deferredPrompt.prompt();
     // Wait for the user to respond to the prompt
     deferredPrompt.userChoice.then((choiceResult: any) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the install prompt");
       } else {
-        console.log('User dismissed the install prompt');
+        console.log("User dismissed the install prompt");
       }
       setDeferredPrompt(null);
     });
@@ -73,6 +77,9 @@ const Header = () => {
           </div>
         </Link>
         <div className="flex space-x-6 items-center md:hidden">
+          {showInstallBtn && (
+            <InstallButton handleInstall={handleInstallClick} />
+          )}
           <button
             type="button"
             onClick={() => {
@@ -114,13 +121,7 @@ const Header = () => {
         {/* Desktop Nav */}
         <div className="hidden  md:flex items-center space-x-2">
           {showInstallBtn && (
-            <button
-              type="button"
-              onClick={handleInstallClick}
-              className="text-white transition-all border border-black  hover:border-white p-2 rounded-md font-semibold"
-            >
-              Install App
-            </button>
+            <InstallButton handleInstall={handleInstallClick} />
           )}
           <Link
             target="_blank"
@@ -141,9 +142,9 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </div >
+      </div>
       {/* Mobile Menu */}
-      < Dialog
+      <Dialog
         as="div"
         className="lg:hidden"
         open={open}
@@ -198,7 +199,7 @@ const Header = () => {
             </div>
           </div>
         </Dialog.Panel>
-      </Dialog >
+      </Dialog>
 
       <FeedbackDialog
         open={openFeedback}
@@ -207,6 +208,26 @@ const Header = () => {
         }}
       />
     </>
+  );
+};
+
+interface InstallButtonProps {
+  handleInstall: () => void;
+}
+const InstallButton = ({ handleInstall }: InstallButtonProps) => {
+  return (
+    <div className="relative group w-fit">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+      <button
+        onClick={handleInstall}
+        type="button"
+        className="w-full flex items-center space-x-2 text-center border relative p-2.5 text-white rounded-md  bg-black  leading-none font-semibold "
+      >
+        <MdOutlineInstallMobile size={20} />
+
+        <span>Install App</span>
+      </button>
+    </div>
   );
 };
 
