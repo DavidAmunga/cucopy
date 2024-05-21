@@ -9,6 +9,9 @@ I built this to help easily copy/share/keep details on Tax Invoices so it can la
 - Scan QR Code off Tax Invoices
 - Confirm QR Code Link
 
+## Demo
+<img src="cucopydemo.gif">
+
 ## Run Locally
 
 Clone the project
